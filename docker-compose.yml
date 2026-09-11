@@ -5,11 +5,15 @@ services:
       dockerfile: Dockerfile
     container_name: ploigi-web-container
     ports:
-      - "3000"
+      - target: 3000        # コンテナ内部のポート
+        published: 3000     # ホスト（VPS）側のポート
+        host_ip: 127.0.0.1  # 🔒 ローカルホスト（内部通信）だけに縛る設定
+        mode: host
     restart: always
     env_file:
       - .env.production
-
+    environment:
+      - HOSTNAME=0.0.0.0
     # depends_on:
     #   - ploigi-dev-mock
 
